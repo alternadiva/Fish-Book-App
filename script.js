@@ -6,8 +6,14 @@ let output = document.getElementById("output");
 
 form.addEventListener("submit", getCountry);
 
+function getCountry(event) {
+  event.preventDefault();
 
-fetch("https://restcountries.com/v3.1/all")
+  let formData = new FormData(form);
+  let value = formData.get("country")
+  console.log(value);
+
+  fetch(`https://restcountries.com/v3.1/name/${value}`)
       .then((response) => {
         if (!response.ok) {
           const error = new Error(response.status);
@@ -19,4 +25,8 @@ fetch("https://restcountries.com/v3.1/all")
       })
       .then((data) => console.log(data))
       .catch((error) => console.log(error));
+
+  inputValue.value = "";
+}
+
       
