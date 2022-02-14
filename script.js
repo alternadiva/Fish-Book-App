@@ -8,6 +8,27 @@ let output = document.getElementById("output");
 const edamamAppID = "605b1768";
 const edamamAppKey = "d2159e6469acba495c81cdce12ad0bcd";
 
+//fetch recipe and display the label, img, indgredients, and maybe health labels
+function displayDish() {
+  const cuisineType = countrieMapping[resultCountry] //access the mapped value of the countrieMapping object 
+  console.log(cuisineType);
+
+//handle output in case cuisineType is undefined, not do fetch
+
+//
+  fetch(`https://api.edamam.com/api/recipes/v2/?type=public&q=a&cuisineType=${cuisineType}&app_id=${edamamAppID}&app_key=${edamamAppKey}`)
+  .then((res) =>
+  res.json())
+  .then((response) => {
+    const recipe = response.hits[0].recipe;
+    document.getElementById('dish-intro').innerText = `Here's a recipe from ${resultCountry}: ${recipe.label}`
+    
+    //do DOM manipulation to display recipe
+
+  
+  });
+}
+
 // Show search results before submitting
 
 let timeout = 0;
@@ -76,19 +97,8 @@ function getCountry(event) {
         resultCountry = data[0].name.common;
         output.innerHTML = `${resultCountry} 
                             <img src=${data[0].flags.png} alt="flag of ${resultCountry}" id="flag">`;
-        resultsList.innerHTML = "";
-
-
-        const cuisineType = countrieMapping[resultCountry] //access the mapped value of the countrieMapping object 
-        console.log(cuisineType);
-        
-        fetch(`https://api.edamam.com/api/recipes/v2/?type=public&q=chicken&app_id=${edamamAppID}&app_key=${edamamAppKey}`)
-        .then((res) =>
-        res.json())
-        .then((response) => {
-          console.log(response);
-        })
-
+        resultsList.innerHTML = "";   
+        displayDish()    
       })
       .catch((error) => {
         resultsList.innerHTML = "<li>No result found</li>";
@@ -120,6 +130,7 @@ function randomCountry() {
         resultCountry = nameResults[randomIndex];
         output.innerHTML = `${resultCountry} 
                             <img src=${flagResults[randomIndex]} alt="flag of ${resultCountry}" id="flag">`;
+        displayDish()
         return resultCountry;
         
       })
@@ -277,7 +288,7 @@ const countrieMapping = {
   "Benin": "Benin",
   "British Indian Ocean Territory": "British Indian Ocean Territory",
   "Mauritania": "Mauritania",
-  "South Africa": "South Africa",
+  "South Africa": undefined,
   "Saint Pierre and Miquelon": "Saint Pierre and Miquelon",
   "San Marino": "San Marino",
   "Egypt": "Mediterranean",
