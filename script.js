@@ -5,6 +5,9 @@ let randomBtn = document.getElementById("random-btn");
 let resultsList = document.getElementById("results-list");
 let output = document.getElementById("output");
 
+const edamamAppID = "605b1768";
+const edamamAppKey = "d2159e6469acba495c81cdce12ad0bcd";
+
 // Show search results before submitting
 
 let timeout = 0;
@@ -74,6 +77,18 @@ function getCountry(event) {
         output.innerHTML = `${resultCountry} 
                             <img src=${data[0].flags.png} alt="flag of ${resultCountry}" id="flag">`;
         resultsList.innerHTML = "";
+
+
+        const cuisineType = countrieMapping[resultCountry] //access the mapped value of the countrieMapping object 
+        console.log(cuisineType);
+        
+        fetch(`https://api.edamam.com/api/recipes/v2/?type=public&q=chicken&app_id=${edamamAppID}&app_key=${edamamAppKey}`)
+        .then((res) =>
+        res.json())
+        .then((response) => {
+          console.log(response);
+        })
+
       })
       .catch((error) => {
         resultsList.innerHTML = "<li>No result found</li>";
