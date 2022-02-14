@@ -1,0 +1,8 @@
+#country-list-item {
+  cursor: pointer;
+  list-style: none;
+}
+
+#flag {
+  width: 70px;
+}
