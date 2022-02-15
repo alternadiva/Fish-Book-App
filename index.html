@@ -7,21 +7,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home Traveller</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Quattrocento+Sans:wght@400;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
     <header>
         <h1>Home Traveller</h1>
+        <img src="./assets/home_traveller.png" alt="person's watching Italian movie and eating pizza" id="index-img">
     </header>
 
     <section id="get-country">
-        <form id="form">
-            <input type="search" name="country" id="country-input" placeholder="Search a country..." autocomplete="off">
-            <input type="submit" value="Submit" id="submit-search">
-        </form>
+        <div id="search-section">
+            <form id="form">
+                <label for="search">Choose the country:</label>
+                <input type="search" name="country" id="country-input" placeholder="Search a country..."
+                    autocomplete="off">
+                <input type="submit" value="Submit" id="submit-search">
+            </form>
+            <p>OR</p>
+            <div id="generate-section">
+                <input type="button" value="Generate Randomly" id="random-btn">
+            </div>
+        </div>
         <ul id="results-list"></ul>
-        <p>OR</p>
-        <input type="button" value="Generate Randomly" id="random-btn">
         <p id="output"></p>
     </section>
 
