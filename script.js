@@ -33,6 +33,7 @@ function displayDish() {
 
 function movieRecommender(data, index) {
   let langResults = data.flatMap(country => country.languages);
+  console.log(langResults);
   let language = langResults[index];
   console.log(language);
   let languageCode = Object.keys(language);
@@ -151,12 +152,13 @@ function getCountry(event) {
         }
       })
       .then((data) => {
+        console.log(data);
         resultCountry = data[0].name.common;
         output.innerHTML = `${resultCountry} 
                             <img src=${data[0].flags.png} alt="flag of ${resultCountry}" id="flag">`;
         resultsList.innerHTML = "";   
         displayDish();
-        movieRecommender(data);    
+        movieRecommender(data, 0);    
       })
       .catch((error) => {
         resultsList.innerHTML = "<li>No result found</li>";
