@@ -5,6 +5,10 @@ let randomBtn = document.getElementById("random-btn");
 let resultsList = document.getElementById("results-list");
 let output = document.getElementById("output");
 let body = document.querySelector("body");
+let movieName = document.getElementById("movie-title");
+let voteAverage = document.getElementById("vote-average");
+let plotSummary = document.getElementById("plot-summary");
+let moviePoster = document.getElementById("movie-poster");
 
 const edamamAppID = "605b1768";
 const edamamAppKey = "d2159e6469acba495c81cdce12ad0bcd";
@@ -30,51 +34,41 @@ function displayDish() {
   });
 }
 
+//function to generate random film in language of chosen country
 
 function movieRecommender(data, index) {
   let langResults = data.flatMap(country => country.languages);
-  console.log(langResults);
   let language = langResults[index];
-  console.log(language);
   let languageCode = Object.keys(language);
-    console.log(languageCode);
-    if (languageCode.length > 1){
-      languageCode = languageCode[0];
-    }
-    let languageCodeString = languageCode.toString();
-    let shortCode = `${languageCodeString[0]}${languageCodeString[1]}`;
-    console.log(shortCode);
+  //chooses the first language listed if there are several for a country
+  if (languageCode.length > 1){
+    languageCode = languageCode[0];
+  }
+  let languageCodeString = languageCode.toString();
+  //questionably converts one language code system to another
+  let shortCode = `${languageCodeString[0]}${languageCodeString[1]}`;
     fetch(`https://api.themoviedb.org/3/discover/movie?api_key=11d60f7fcb15ec34d310ee95b2269f47&with_original_language=${shortCode}`)
-    // let films = fetch(`https://api.themoviedb.org/3/discover/movie?api_key=11d60f7fcb15ec34d310ee95b2269f47&with_original_language=de`))
   .then((response) => {
-            if(!response.ok) {throw new Error ('bad choice');}
-            return response.json();
-        })
-        .then((response) => {
-            let filmResults = response.results;
-            let randomIndex = Math.floor(Math.random() * filmResults.length);
-            let image = document.createElement("img");
-            resultFilm = filmResults[randomIndex];
-            body.append(image);
-            if (resultFilm.backdrop_path){
-              image.src=`https://image.tmdb.org/t/p/w500/${resultFilm.backdrop_path}`;
-            }
-            let name = document.createElement("p");
-            let voteAverage = document.createElement("p");
-            let plotSummary = document.createElement("p");
-            body.append(name);
-            body.append(voteAverage);
-            body.append(plotSummary);
-            name.append(`${resultFilm.original_title}`);
-            voteAverage.append(`Voter rating: ${resultFilm.vote_average}/10`);
-            plotSummary.append(`${resultFilm.overview}`) 
-            return resultFilm;
-        })
- 
-      .catch((error) => {
-        console.log(error)});
+    if(!response.ok) {throw new Error ('bad choice');}
+    return response.json();
+  })
+  .then((response) => {
+    let filmResults = response.results;
+    let randomIndex = Math.floor(Math.random() * filmResults.length);
+    let resultFilm = filmResults[randomIndex];
+    //display information for user
+    if (resultFilm.backdrop_path){
+    moviePoster.src=`https://image.tmdb.org/t/p/w500/${resultFilm.backdrop_path}`;
+    }
 
-      }
+    movieName.innerText = (`${resultFilm.original_title}`);
+    voteAverage.innerText = (`Voter rating: ${resultFilm.vote_average}/10`);
+    plotSummary.innerText = (`${resultFilm.overview}`); 
+    return resultFilm;
+  })
+  .catch((error) => {
+    console.log(error)});
+}
 
 
 
