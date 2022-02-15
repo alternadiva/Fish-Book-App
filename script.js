@@ -23,8 +23,15 @@ function displayDish() {
 
   if (cuisineType) {
     fetch(`https://api.edamam.com/api/recipes/v2/?type=public&q=&cuisineType=${cuisineType}&app_id=${edamamAppID}&app_key=${edamamAppKey}`)
-      .then((res) =>
-        res.json())
+      .then((response) => {
+        if (!response.ok) {
+          const error = new Error(response.status);
+          throw error;
+        }
+        else {
+          return response.json();
+        }
+      })
       .then((response) => {
         const randomRecipe = Math.floor(Math.random() * response.hits.length);
         const recipe = response.hits[randomRecipe].recipe;
@@ -50,20 +57,14 @@ function displayDish() {
         a.href = recipe.url;
         a.target = "_blank"
         recipeURLelem.appendChild(a);
-      });
+      })
+      .catch(() => dishIntro.innerText = "Oops, something went wrong.")
   } else { //handle output in case cuisineType is undefined
     dishIntro.innerText = `Sorry, couldn't find a recipe from ${resultCountry}. Try another country!`
   }
 
 }
 
-//randomise the recipe shown 
-
-//recipe
-
-// let nameResults = data.flatMap(country => country.name.common);
-// let flagResults = data.flatMap(country => country.flags.png);
-// let randomRecipe = Math.floor(Math.random() * nameResults.length)
 
 // Show search results before submitting
 
