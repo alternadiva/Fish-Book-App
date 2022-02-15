@@ -10,6 +10,7 @@ const edamamAppKey = "d2159e6469acba495c81cdce12ad0bcd";
 const dishIntro = document.getElementById('dish-intro');
 const dishImgElem = document.getElementById('dish-img');
 const ingredientsElem = document.getElementById('ingredients');
+const recipeURLelem = document.getElementById('recipe-url');
 
 //fetch recipe and display the label, img, indgredients, and maybe health labels
 function displayDish() {
@@ -34,9 +35,17 @@ function displayDish() {
     const ingredients = recipe.ingredientLines;
     console.log(ingredients);
     ingredientsElem.innerText = `Make the best ${recipe.label} using the following ingredients: ${ingredients}`;
-
     console.log(response);
 
+    //create link
+    const a = document.createElement('a');
+    const linkText = document.createTextNode('here');
+    a.appendChild(linkText);
+    a.title = "here";
+    a.href = recipe.url;
+
+    //display link
+    recipeURLelem.innerText = `Try out this recipe ${a}`
   
   });
 }
