@@ -11,6 +11,7 @@ const dishIntro = document.getElementById('dish-intro');
 const dishImgElem = document.getElementById('dish-img');
 const ingredientsElem = document.getElementById('ingredients');
 const recipeURLelem = document.getElementById('recipe-url');
+const ingredientsList = document.getElementById('ingredients-list')
 
 // ****************************
 // * Display Dish Information *
@@ -34,11 +35,15 @@ function displayDish() {
         dishImgElem.src = dishImg;
 
         const ingredients = recipe.ingredientLines;
-        console.log(ingredients);
-        ingredientsElem.innerText = `All you need to make the best ${recipe.label} is: ${ingredients}`;
-        //make ingredients appear as a list
-        console.log( response.hits);
-
+        ingredientsElem.innerText = `All you need to make the best ${recipe.label} is:`;
+        // make ingredients appear as a list
+        for (let item of ingredients) {
+          console.log(item);
+          const li = document.createElement("li");
+          li.append(item);
+          ingredientsList.append(li);
+        }
+             
         //create link
         const a = document.createElement('a');
         a.innerText = "Try out this wonderful recipe!";
@@ -211,7 +216,7 @@ const countryMapping = {
   "Myanmar": "South East Asian",
   "Barbados": "Caribbean",
   "Cambodia": "South East Asian",
-  "Antigua and Barbuda": "Caribbeana",
+  "Antigua and Barbuda": "Caribbean",
   "Kenya": undefined,
   "India": "Indian",
   "São Tomé and Príncipe": undefined,
