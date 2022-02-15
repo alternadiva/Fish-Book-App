@@ -12,30 +12,32 @@ const dishImgElem = document.getElementById('dish-img');
 const ingredientsElem = document.getElementById('ingredients');
 const recipeURLelem = document.getElementById('recipe-url');
 
-//fetch recipe and display the label, img, indgredients, and maybe health labels
+// ****************************
+// * Display Dish Information *
+// ****************************
+
 function displayDish() {
   const cuisineType = countryMapping[resultCountry] //access the mapped value of the countrieMapping object 
   console.log(cuisineType);
-
-//handle output in case cuisineType is undefined, not do fetch
 
   if (cuisineType) {
     fetch(`https://api.edamam.com/api/recipes/v2/?type=public&q=&cuisineType=${cuisineType}&app_id=${edamamAppID}&app_key=${edamamAppKey}`)
       .then((res) =>
         res.json())
       .then((response) => {
-        //display recipe
-        const recipe = response.hits[0].recipe;
+        const randomRecipe = Math.floor(Math.random() * response.hits.length);
+        const recipe = response.hits[randomRecipe].recipe;
         const mealType = recipe.mealType[0];
-        dishIntro.innerText = `Not sure what to have for ${mealType}? Here's a dish from ${resultCountry}: ${recipe.label}!`
+        dishIntro.innerText = `Not sure what to have for ${mealType}? Here's some inspiration from ${resultCountry}: ${recipe.label}!`
 
         const dishImg = recipe.image;
         dishImgElem.src = dishImg;
 
         const ingredients = recipe.ingredientLines;
         console.log(ingredients);
-        ingredientsElem.innerText = `Make the best ${recipe.label} using the following ingredients: ${ingredients}`;
-        console.log(response.hits.map(item => item.recipe.label));
+        ingredientsElem.innerText = `All you need to make the best ${recipe.label} is: ${ingredients}`;
+        //make ingredients appear as a list
+        console.log( response.hits);
 
         //create link
         const a = document.createElement('a');
@@ -44,13 +46,19 @@ function displayDish() {
         a.target = "_blank"
         recipeURLelem.appendChild(a);
       });
-  } else {
+  } else { //handle output in case cuisineType is undefined
     dishIntro.innerText = `Sorry, couldn't find a recipe from ${resultCountry}. Try another country!`
   }
 
 }
 
-//randomise the recipe shown
+//randomise the recipe shown 
+
+//recipe
+
+// let nameResults = data.flatMap(country => country.name.common);
+// let flagResults = data.flatMap(country => country.flags.png);
+// let randomRecipe = Math.floor(Math.random() * nameResults.length)
 
 // Show search results before submitting
 
