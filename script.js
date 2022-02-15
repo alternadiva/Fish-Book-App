@@ -19,31 +19,35 @@ function displayDish() {
 
 //handle output in case cuisineType is undefined, not do fetch
 
-//
-  fetch(`https://api.edamam.com/api/recipes/v2/?type=public&q=&cuisineType=${cuisineType}&app_id=${edamamAppID}&app_key=${edamamAppKey}`)
-  .then((res) =>
-  res.json())
-  .then((response) => {
-    //display recipe
-    const recipe = response.hits[0].recipe;
-    const mealType = recipe.mealType[0];
-    dishIntro.innerText = `Not sure what to have for ${mealType}? Here's a dish from ${resultCountry}: ${recipe.label}!`
+  if (cuisineType) {
+    fetch(`https://api.edamam.com/api/recipes/v2/?type=public&q=&cuisineType=${cuisineType}&app_id=${edamamAppID}&app_key=${edamamAppKey}`)
+      .then((res) =>
+        res.json())
+      .then((response) => {
+        //display recipe
+        const recipe = response.hits[0].recipe;
+        const mealType = recipe.mealType[0];
+        dishIntro.innerText = `Not sure what to have for ${mealType}? Here's a dish from ${resultCountry}: ${recipe.label}!`
 
-    const dishImg = recipe.image;
-    dishImgElem.src= dishImg; 
+        const dishImg = recipe.image;
+        dishImgElem.src = dishImg;
 
-    const ingredients = recipe.ingredientLines;
-    console.log(ingredients);
-    ingredientsElem.innerText = `Make the best ${recipe.label} using the following ingredients: ${ingredients}`;
-    console.log(response.hits.map(item => item.recipe.label));
+        const ingredients = recipe.ingredientLines;
+        console.log(ingredients);
+        ingredientsElem.innerText = `Make the best ${recipe.label} using the following ingredients: ${ingredients}`;
+        console.log(response.hits.map(item => item.recipe.label));
 
-    //create link
-    const a = document.createElement('a');
-    a.innerText = "Try out this wonderful recipe!";
-    a.href = recipe.url;
-    a.target = "_blank"
-    recipeURLelem.appendChild(a);
-  });
+        //create link
+        const a = document.createElement('a');
+        a.innerText = "Try out this wonderful recipe!";
+        a.href = recipe.url;
+        a.target = "_blank"
+        recipeURLelem.appendChild(a);
+      });
+  } else {
+    dishIntro.innerText = `Sorry, couldn't find a recipe from ${resultCountry}. Try another country!`
+  }
+
 }
 
 //randomise the recipe shown
@@ -178,7 +182,7 @@ const countryMapping = {
   "Guernsey": undefined,
   "United States Virgin Islands": "Caribbean",
   "Uganda": undefined,
-  "Liechtenstein": undefined,
+  "Liechtenstein": "Central Europe",
   "Guinea-Bissau": undefined,
   "South Korea": "Asian",
   "Cuba": "Caribbean",
