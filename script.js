@@ -4,6 +4,11 @@ let submitBtn = document.getElementById("submit-search");
 let randomBtn = document.getElementById("random-btn");
 let resultsList = document.getElementById("results-list");
 let output = document.getElementById("output");
+let body = document.querySelector("body");
+let movieName = document.getElementById("movie-title");
+let voteAverage = document.getElementById("vote-average");
+let plotSummary = document.getElementById("plot-summary");
+let moviePoster = document.getElementById("movie-poster");
 
 const edamamAppID = "605b1768";
 const edamamAppKey = "d2159e6469acba495c81cdce12ad0bcd";
@@ -28,6 +33,45 @@ function displayDish() {
   
   });
 }
+
+//function to generate random film in language of chosen country
+
+function movieRecommender(data, index) {
+  let langResults = data.flatMap(country => country.languages);
+  let language = langResults[index];
+  let languageCode = Object.keys(language);
+  //chooses the first language listed if there are several for a country
+  if (languageCode.length > 1){
+    languageCode = languageCode[0];
+  }
+  let languageCodeString = languageCode.toString();
+  //questionably converts one language code system to another
+  let shortCode = `${languageCodeString[0]}${languageCodeString[1]}`;
+    fetch(`https://api.themoviedb.org/3/discover/movie?api_key=11d60f7fcb15ec34d310ee95b2269f47&with_original_language=${shortCode}`)
+  .then((response) => {
+    if(!response.ok) {throw new Error ('bad choice');}
+    return response.json();
+  })
+  .then((response) => {
+    let filmResults = response.results;
+    let randomIndex = Math.floor(Math.random() * filmResults.length);
+    let resultFilm = filmResults[randomIndex];
+    //display information for user
+    if (resultFilm.backdrop_path){
+    moviePoster.src=`https://image.tmdb.org/t/p/w500/${resultFilm.backdrop_path}`;
+    }
+
+    movieName.innerText = (`${resultFilm.original_title}`);
+    voteAverage.innerText = (`Voter rating: ${resultFilm.vote_average}/10`);
+    plotSummary.innerText = (`${resultFilm.overview}`); 
+    return resultFilm;
+  })
+  .catch((error) => {
+    console.log(error)});
+}
+
+
+
 
 // Show search results before submitting
 
@@ -94,11 +138,13 @@ function getCountry(event) {
         }
       })
       .then((data) => {
+        console.log(data);
         resultCountry = data[0].name.common;
         output.innerHTML = `${resultCountry} 
                             <img src=${data[0].flags.png} alt="flag of ${resultCountry}" id="flag">`;
         resultsList.innerHTML = "";   
-        displayDish()    
+        displayDish();
+        movieRecommender(data, 0);    
       })
       .catch((error) => {
         resultsList.innerHTML = "<li>No result found</li>";
@@ -126,11 +172,14 @@ function randomCountry() {
       .then((data) => {
         let nameResults = data.flatMap(country => country.name.common);
         let flagResults = data.flatMap(country => country.flags.png);
-        let randomIndex = Math.floor(Math.random() * nameResults.length)
+        let randomIndex = Math.floor(Math.random() * nameResults.length);
+        
         resultCountry = nameResults[randomIndex];
+        
         output.innerHTML = `${resultCountry} 
                             <img src=${flagResults[randomIndex]} alt="flag of ${resultCountry}" id="flag">`;
-        displayDish()
+        displayDish();
+        movieRecommender(data, randomIndex);
         return resultCountry;
         
       })
