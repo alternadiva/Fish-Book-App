@@ -4,6 +4,7 @@ let submitBtn = document.getElementById("submit-search");
 let randomBtn = document.getElementById("random-btn");
 let resultsList = document.getElementById("results-list");
 let output = document.getElementById("output");
+let body = document.querySelector("body");
 
 const edamamAppID = "605b1768";
 const edamamAppKey = "d2159e6469acba495c81cdce12ad0bcd";
@@ -28,6 +29,62 @@ function displayDish() {
   
   });
 }
+
+
+function movieRecommender(data, index) {
+  let langResults = data.flatMap(country => country.languages);
+  let language = langResults[index];
+  console.log(language);
+  let languageCode = Object.keys(language);
+    console.log(languageCode);
+    if (languageCode.length > 1){
+      languageCode = languageCode[0];
+    }
+    let languageCodeString = languageCode.toString();
+    let shortCode = `${languageCodeString[0]}${languageCodeString[1]}`;
+    console.log(shortCode);
+    fetch(`https://api.themoviedb.org/3/discover/movie?api_key=11d60f7fcb15ec34d310ee95b2269f47&with_original_language=${shortCode}`)
+    // let films = fetch(`https://api.themoviedb.org/3/discover/movie?api_key=11d60f7fcb15ec34d310ee95b2269f47&with_original_language=de`))
+  .then((response) => {
+            if(!response.ok) {throw new Error ('bad choice');}
+            return response.json();
+        })
+        .then((response) => {
+            console.log(response);
+            let filmResults = response.results;
+            console.log(response.results);
+            console.log(filmResults.length);
+            let randomIndex = Math.floor(Math.random() * filmResults.length);
+            let image = document.createElement("img");
+            resultFilm = filmResults[randomIndex];
+            body.append(image);
+            image.src=`https://image.tmdb.org/t/p/w500/${resultFilm.backdrop_path}`;
+            let name = document.createElement("p");
+            let runtime = document.createElement("p");
+            let voteAverage = document.createElement("p");
+            let plotSummary = document.createElement("p");
+            body.append(name);
+            body.append(runtime);
+            body.append(voteAverage);
+            body.append(plotSummary);
+            name.append(`${resultFilm.original_title}`);
+            if(resultFilm.runtime == undefined){
+                runtime.append(`No information on duration`)
+            }
+            else{
+            runtime.append(`Duration: ${resultFilm.runtime} minutes`);}
+            voteAverage.append(`Voter rating: ${resultFilm.vote_average}/10`);
+            plotSummary.append(`${resultFilm.overview}`) 
+            return resultFilm;
+        })
+ 
+      .catch((error) => {
+        console.log(error)});
+
+      }
+
+
+
 
 // Show search results before submitting
 
@@ -98,7 +155,8 @@ function getCountry(event) {
         output.innerHTML = `${resultCountry} 
                             <img src=${data[0].flags.png} alt="flag of ${resultCountry}" id="flag">`;
         resultsList.innerHTML = "";   
-        displayDish()    
+        displayDish();
+        movieRecommender(data);    
       })
       .catch((error) => {
         resultsList.innerHTML = "<li>No result found</li>";
@@ -126,11 +184,14 @@ function randomCountry() {
       .then((data) => {
         let nameResults = data.flatMap(country => country.name.common);
         let flagResults = data.flatMap(country => country.flags.png);
-        let randomIndex = Math.floor(Math.random() * nameResults.length)
+        let randomIndex = Math.floor(Math.random() * nameResults.length);
+        
         resultCountry = nameResults[randomIndex];
+        
         output.innerHTML = `${resultCountry} 
                             <img src=${flagResults[randomIndex]} alt="flag of ${resultCountry}" id="flag">`;
-        displayDish()
+        displayDish();
+        movieRecommender(data, randomIndex);
         return resultCountry;
         
       })
