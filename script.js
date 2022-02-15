@@ -51,29 +51,21 @@ function movieRecommender(data, index) {
             return response.json();
         })
         .then((response) => {
-            console.log(response);
             let filmResults = response.results;
-            console.log(response.results);
-            console.log(filmResults.length);
             let randomIndex = Math.floor(Math.random() * filmResults.length);
             let image = document.createElement("img");
             resultFilm = filmResults[randomIndex];
             body.append(image);
-            image.src=`https://image.tmdb.org/t/p/w500/${resultFilm.backdrop_path}`;
+            if (resultFilm.backdrop_path){
+              image.src=`https://image.tmdb.org/t/p/w500/${resultFilm.backdrop_path}`;
+            }
             let name = document.createElement("p");
-            let runtime = document.createElement("p");
             let voteAverage = document.createElement("p");
             let plotSummary = document.createElement("p");
             body.append(name);
-            body.append(runtime);
             body.append(voteAverage);
             body.append(plotSummary);
             name.append(`${resultFilm.original_title}`);
-            if(resultFilm.runtime == undefined){
-                runtime.append(`No information on duration`)
-            }
-            else{
-            runtime.append(`Duration: ${resultFilm.runtime} minutes`);}
             voteAverage.append(`Voter rating: ${resultFilm.vote_average}/10`);
             plotSummary.append(`${resultFilm.overview}`) 
             return resultFilm;
