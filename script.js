@@ -7,6 +7,8 @@ let output = document.getElementById("output");
 
 const edamamAppID = "605b1768";
 const edamamAppKey = "d2159e6469acba495c81cdce12ad0bcd";
+const dishIntro = document.getElementById('dish-intro');
+const dishImgElem = document.getElementById('dish-img')
 
 //fetch recipe and display the label, img, indgredients, and maybe health labels
 function displayDish() {
@@ -20,14 +22,19 @@ function displayDish() {
   .then((res) =>
   res.json())
   .then((response) => {
+    //display recipe
     const recipe = response.hits[0].recipe;
-    document.getElementById('dish-intro').innerText = `Here's a recipe from ${resultCountry}: ${recipe.label}`
+    dishIntro.innerText = `Here's a recipe from ${resultCountry}: ${recipe.label}!`
+    const dishImg = response.hits[0].recipe.image;
+    dishImgElem.src= dishImg; 
     
-    //do DOM manipulation to display recipe
+    console.log(response);
 
   
   });
 }
+
+//randomise the recipe shown
 
 // Show search results before submitting
 
