@@ -120,6 +120,7 @@ function searchResults() {
 form.addEventListener("submit", getCountry);
 
 let resultCountry;
+let countryObject;
 
 function getCountry(event) {
   event.preventDefault();
