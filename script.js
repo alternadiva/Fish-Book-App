@@ -14,13 +14,13 @@ const recipeURLelem = document.getElementById('recipe-url');
 
 //fetch recipe and display the label, img, indgredients, and maybe health labels
 function displayDish() {
-  const cuisineType = countrieMapping[resultCountry] //access the mapped value of the countrieMapping object 
+  const cuisineType = countryMapping[resultCountry] //access the mapped value of the countrieMapping object 
   console.log(cuisineType);
 
 //handle output in case cuisineType is undefined, not do fetch
 
 //
-  fetch(`https://api.edamam.com/api/recipes/v2/?type=public&q=a&cuisineType=${cuisineType}&app_id=${edamamAppID}&app_key=${edamamAppKey}`)
+  fetch(`https://api.edamam.com/api/recipes/v2/?type=public&q=&cuisineType=${cuisineType}&app_id=${edamamAppID}&app_key=${edamamAppKey}`)
   .then((res) =>
   res.json())
   .then((response) => {
@@ -35,18 +35,14 @@ function displayDish() {
     const ingredients = recipe.ingredientLines;
     console.log(ingredients);
     ingredientsElem.innerText = `Make the best ${recipe.label} using the following ingredients: ${ingredients}`;
-    console.log(response);
+    console.log(response.hits.map(item => item.recipe.label));
 
     //create link
     const a = document.createElement('a');
-    const linkText = document.createTextNode('here');
-    a.appendChild(linkText);
-    a.title = "here";
+    a.innerText = "Try out this wonderful recipe!";
     a.href = recipe.url;
-
-    //display link
-    recipeURLelem.innerText = `Try out this recipe ${a}`
-  
+    a.target = "_blank"
+    recipeURLelem.appendChild(a);
   });
 }
 
@@ -162,13 +158,10 @@ function randomCountry() {
 }
 
 
-// ****************
-// * Display Dish *
-// ****************
 
 //map countries to cuisine types 
 
-const countrieMapping = {
+const countryMapping = {
   "Sweden": "Nordic",
   "Albania": undefined,
   "Vanuatu": undefined,
@@ -421,8 +414,6 @@ const countrieMapping = {
   "Christmas Island": undefined
 };
 
-
-//display results
 
 
       
