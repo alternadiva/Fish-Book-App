@@ -42,9 +42,12 @@ function displayDish() {
         dishImgElem.src = dishImg;
 
         const ingredients = recipe.ingredientLines;
-        ingredientsElem.innerText = `All you need to make the best ${recipe.label} is:`;
-        // make ingredients appear as a list
-        for (let item of ingredients) {
+        ingredientsElem.innerText = `Want to have the best ${recipe.label}? Here's what you need:`;
+
+        //ingredients appear as a list
+        ingredientsList.innerHTML = "";
+    
+        for (let item of ingredients) { 
           console.log(item);
           const li = document.createElement("li");
           li.append(item);
@@ -52,6 +55,7 @@ function displayDish() {
         }
              
         //create link
+        recipeURLelem.innerHTML = "";
         const a = document.createElement('a');
         a.innerText = "Try out this wonderful recipe!";
         a.href = recipe.url;
@@ -62,9 +66,7 @@ function displayDish() {
   } else { //handle output in case cuisineType is undefined
     dishIntro.innerText = `Sorry, couldn't find a recipe from ${resultCountry}. Try another country!`
   }
-
 }
-
 
 // Show search results before submitting
 
