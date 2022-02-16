@@ -76,6 +76,7 @@ function clearResults() {
   dishImgElem.src = "";
   ingredientsList.innerHTML = "";
   recipeURLelem.innerHTML = "";
+  ingredientsElem.innerHTML = "";
 }
 
 //function to generate random film in language of chosen country
