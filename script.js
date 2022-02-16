@@ -93,8 +93,10 @@ function movieRecommender(data, index=0) {
   })
   .then((response) => {
     let filmResults = response.results;
-    let randomIndex = Math.floor(Math.random() * filmResults.length);
-    let resultFilm = filmResults[randomIndex];
+    let adultFiltered = filmResults.filter(function(result) {
+      return !result.adult});
+    let randomIndex = Math.floor(Math.random() * adultFiltered.length);
+    let resultFilm = adultFiltered[randomIndex];
     //display information for user
     if (resultFilm.backdrop_path){
     moviePoster.src=`https://image.tmdb.org/t/p/w500/${resultFilm.backdrop_path}`;
