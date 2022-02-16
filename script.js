@@ -75,7 +75,7 @@ function displayDish() {
 
 //function to generate random film in language of chosen country
 
-function movieRecommender(data, index) {
+function movieRecommender(data, index=0) {
   let langResults = data.flatMap(country => country.languages);
   let language = langResults[index];
   let languageCode = Object.keys(language);
@@ -183,7 +183,7 @@ function getCountry(event) {
                             <img src=${data[0].flags.png} alt="flag of ${resultCountry}" id="flag">`;
         resultsList.innerHTML = "";   
         displayDish();
-        movieRecommender(data, 0);    
+        movieRecommender(data);    
       })
       .catch((error) => {
         resultsList.innerHTML = "<li>No result found</li>";
