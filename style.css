@@ -1,3 +1,10 @@
+:root {
+  --primary-color: rgb(185, 221, 198);
+  --secondary-color: rgb(192, 232, 253);
+  --background-color: rgb(233, 240, 245);
+  --dark-grey: rgb(90, 90, 90);
+}
+
 body {
   font-family: "Quattrocento Sans", sans-serif;
   text-align: center;
@@ -9,7 +16,7 @@ body {
 /* ------------ Title and logo -------------- */
 
 h1 {
-  color: rgb(90, 90, 90);
+  color: var(--dark-grey);
   letter-spacing: 0.2rem;
   text-transform: uppercase;
   margin-bottom: 50px;
@@ -21,7 +28,7 @@ h1 {
   height: auto;
   margin-bottom: 50px;
   background-color: rgba(255, 255, 255, 0.863);
-  border: 7px solid rgb(185, 221, 198);
+  border: 7px solid var(--primary-color);
   border-radius: 50%;
 }
 
@@ -40,8 +47,7 @@ h1 {
   min-width: 300px;
   height: auto;
   min-height: 150px;
-  padding-top: ;
-  background-color: rgb(185, 221, 198);
+  background-color: var(--primary-color);
   border: 7px solid white;
   border-radius: 30px;
   display: flex;
@@ -75,8 +81,8 @@ h1 {
   height: 35px;
   border: none;
   border-radius: 10px;
-  background-color: rgb(192, 232, 253);
-  color: rgb(90, 90, 90);
+  background-color: var(--secondary-color);
+  color: var(--dark-grey);
   text-transform: uppercase;
   letter-spacing: 0.1rem;
   font-weight: 600;
