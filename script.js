@@ -233,6 +233,8 @@ function randomCountry() {
 
       output.innerHTML = `${resultCountry} 
                             <img src=${flagResults[randomIndex]} alt="flag of ${resultCountry}" id="flag">`;
+      recipeSection.classList.remove('hide');
+      movieSection.classList.remove('hide');
       displayDish();
       movieRecommender(data, randomIndex);
       return resultCountry;
