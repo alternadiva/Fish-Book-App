@@ -77,17 +77,19 @@ function displayDish() {
 
 function movieRecommender(data, index=0) {
   let langResults = data.flatMap(country => country.languages);
-  let language = langResults[index];
-  let languageCode = Object.keys(language);
+  let languageThing = langResults[index];
+  let language= Object.values(languageThing);
   //chooses the first language listed if there are several for a country
-  if (languageCode.length > 1){
-    languageCode = languageCode[0];
+  if (language.length > 1){
+    language = language[0];
   }
-  let languageCodeString = languageCode.toString();
-  //questionably converts one language code system to another
-  let shortCode = `${languageCodeString[0]}${languageCodeString[1]}`;
-  console.log(shortCode);
-    fetch(`https://api.themoviedb.org/3/discover/movie?api_key=11d60f7fcb15ec34d310ee95b2269f47&with_original_language=${shortCode}&include_adult=false`)
+  console.log(language);
+  let languageCode;
+  for (const [key, value] of Object.entries(langObject)) {
+    if (value.includes(language))
+     languageCode = key;
+  }
+  fetch(`https://api.themoviedb.org/3/discover/movie?api_key=11d60f7fcb15ec34d310ee95b2269f47&with_original_language=${languageCode}&include_adult=false`)
   .then((response) => {
     console.log(response);
     if(!response.ok) {throw new Error ('problem calling API');}
