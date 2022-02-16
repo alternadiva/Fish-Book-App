@@ -86,8 +86,8 @@ function movieRecommender(data, index=0) {
   console.log(language);
   let languageCode;
   for (const [key, value] of Object.entries(langObject)) {
-    if (value.includes(language))
-     languageCode = key;
+    if (value.includes(language)){
+     languageCode = key;}
   }
   fetch(`https://api.themoviedb.org/3/discover/movie?api_key=11d60f7fcb15ec34d310ee95b2269f47&with_original_language=${languageCode}&include_adult=false`)
   .then((response) => {
