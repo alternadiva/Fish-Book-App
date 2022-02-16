@@ -97,16 +97,11 @@ function movieRecommender(data, index=0) {
     console.log(response);
     if (response.total_pages == 0) {
       moviePoster.src="";
-    
-
-    movieName.innerText = `No film found for this language`;
-    voteAverage.innerText = ("");
-    plotSummary.innerText = "";
-      throw new Error ('no films found')};
-    console.log(response.total_pages);
-    let page = Math.floor(Math.random() * response.total_pages);
-    console.log(page); 
-    // let page = Math.floor(Math.random * result.total_pages)
+      movieName.innerText = `No film found for this language`;
+      voteAverage.innerText = ("");
+      plotSummary.innerText = "";
+      throw new Error ('no films found')
+    };
     let filmResults = response.results;
     let randomIndex = Math.floor(Math.random() * filmResults.length);
     let resultFilm = filmResults[randomIndex];
