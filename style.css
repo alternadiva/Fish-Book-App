@@ -134,3 +134,25 @@ h1 {
 #dish-img {
   max-width: fit-content;
 }
+
+.hide {
+  display: none;
+}
+
+#movie-rec {
+  max-width: 800px;
+  min-width: 300px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: var(--primary-color);
+  border: 7px solid white;
+  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+#movie-poster {
+  max-width: fit-content;
+}
