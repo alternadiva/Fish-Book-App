@@ -16,7 +16,9 @@ const dishIntro = document.getElementById('dish-intro');
 const dishImgElem = document.getElementById('dish-img');
 const ingredientsElem = document.getElementById('ingredients');
 const recipeURLelem = document.getElementById('recipe-url');
-const ingredientsList = document.getElementById('ingredients-list')
+const ingredientsList = document.getElementById('ingredients-list');
+const recipeSection = document.getElementById('display-dish');
+const movieSection = document.getElementById('movie-rec');
 
 // ****************************
 // * Display Dish Information *
@@ -24,7 +26,6 @@ const ingredientsList = document.getElementById('ingredients-list')
 
 function displayDish() {
   const cuisineType = countryMapping[resultCountry] //access the mapped value of the countrieMapping object 
-  console.log(cuisineType);
 
   if (cuisineType) {
     fetch(`https://api.edamam.com/api/recipes/v2/?type=public&q=&cuisineType=${cuisineType}&app_id=${edamamAppID}&app_key=${edamamAppKey}`)
@@ -194,6 +195,8 @@ function getCountry(event) {
       output.innerHTML = `${resultCountry} 
                             <img src=${data[0].flags.png} alt="flag of ${resultCountry}" id="flag">`;
       resultsList.innerHTML = "";
+      recipeSection.classList.remove('hide');
+      movieSection.classList.remove('hide');
       displayDish();
       movieRecommender(data);
     })
