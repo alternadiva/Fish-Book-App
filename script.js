@@ -51,14 +51,14 @@ function displayDish() {
 
         //ingredients appear as a list
         ingredientsList.innerHTML = "";
-    
-        for (let item of ingredients) { 
+
+        for (let item of ingredients) {
           // console.log(item);
           const li = document.createElement("li");
           li.append(item);
           ingredientsList.append(li);
         }
-             
+
         //create link
         recipeURLelem.innerHTML = "";
         const a = document.createElement('a');
@@ -75,48 +75,49 @@ function displayDish() {
 
 //function to generate random film in language of chosen country
 
-function movieRecommender(data, index=0) {
+function movieRecommender(data, index = 0) {
   let langResults = data.flatMap(country => country.languages);
   let language = langResults[index];
   let languageCode = Object.keys(language);
   //chooses the first language listed if there are several for a country
-  if (languageCode.length > 1){
+  if (languageCode.length > 1) {
     languageCode = languageCode[0];
   }
   let languageCodeString = languageCode.toString();
   //questionably converts one language code system to another
   let shortCode = `${languageCodeString[0]}${languageCodeString[1]}`;
   console.log(shortCode);
-    fetch(`https://api.themoviedb.org/3/discover/movie?api_key=11d60f7fcb15ec34d310ee95b2269f47&with_original_language=${shortCode}&include_adult=false`)
-  .then((response) => {
-    console.log(response);
-    if(!response.ok) {throw new Error ('problem calling API');}
-    return response.json();
-  })
-  .then((response) => {
-    console.log(response);
-    if (response.total_pages == 0) {
-      moviePoster.src="";
-      movieName.innerText = `No film found for this language`;
-      voteAverage.innerText = ("");
-      plotSummary.innerText = "";
-      throw new Error ('no films found')
-    };
-    let filmResults = response.results;
-    let randomIndex = Math.floor(Math.random() * filmResults.length);
-    let resultFilm = filmResults[randomIndex];
-    //display information for user
-    if (resultFilm.backdrop_path){
-    moviePoster.src=`https://image.tmdb.org/t/p/w500/${resultFilm.backdrop_path}`;
-    }
+  fetch(`https://api.themoviedb.org/3/discover/movie?api_key=11d60f7fcb15ec34d310ee95b2269f47&with_original_language=${shortCode}&include_adult=false`)
+    .then((response) => {
+      console.log(response);
+      if (!response.ok) {throw new Error('problem calling API');}
+      return response.json();
+    })
+    .then((response) => {
+      console.log(response);
+      if (response.total_pages == 0) {
+        moviePoster.src = "";
+        movieName.innerText = `No film found for this language`;
+        voteAverage.innerText = ("");
+        plotSummary.innerText = "";
+        throw new Error('no films found')
+      };
+      let filmResults = response.results;
+      let randomIndex = Math.floor(Math.random() * filmResults.length);
+      let resultFilm = filmResults[randomIndex];
+      //display information for user
+      if (resultFilm.backdrop_path) {
+        moviePoster.src = `https://image.tmdb.org/t/p/w500/${resultFilm.backdrop_path}`;
+      }
 
-    movieName.innerText = (`${resultFilm.original_title}`);
-    voteAverage.innerText = (`Voter rating: ${resultFilm.vote_average}/10`);
-    plotSummary.innerText = (`${resultFilm.overview}`); 
-    return resultFilm;
-  })
-  .catch((error) => {
-    console.log(error.message)});
+      movieName.innerText = (`${resultFilm.original_title}`);
+      voteAverage.innerText = (`Voter rating: ${resultFilm.vote_average}/10`);
+      plotSummary.innerText = (`${resultFilm.overview}`);
+      return resultFilm;
+    })
+    .catch((error) => {
+      console.log(error.message)
+    });
 }
 
 
@@ -134,7 +135,7 @@ function searchResults() {
       .then((response) => response.json())
       .then((data) => {
         resultsList.innerHTML = "";
-        
+
         clearTimeout(timeout);
 
         if (inputValue.value.trim().length === 0) {
@@ -142,16 +143,17 @@ function searchResults() {
         }
 
         let nameResults = data.flatMap(country => country.name.common);
-        
+
         timeout = setTimeout(() => {
           nameResults.forEach(result => {
             if (result.toLowerCase().includes(inputValue.value.toLowerCase())) {
               let listItem = document.createElement("li");
               listItem.id = "country-list-item";
               listItem.innerText = result;
-              listItem.addEventListener("click", function() {
+              listItem.addEventListener("click", function () {
                 inputValue.value = result;
-                resultsList.innerHTML = "";})
+                resultsList.innerHTML = "";
+              })
               resultsList.appendChild(listItem);
             }
           });
@@ -161,7 +163,7 @@ function searchResults() {
         resultsList.innerHTML = "<li>No result found</li>";
       });
   }
-  }
+}
 
 
 // Submit input and show final result
@@ -177,28 +179,29 @@ function getCountry(event) {
   let value = formData.get("country");
 
   fetch(`https://restcountries.com/v3.1/name/${value}`)
-      .then((response) => {
-        if (!response.ok) {
-          const error = new Error(response.status);
-          throw error;
-        }
-        else {
-          return response.json();
-        }
-      })
-      .then((data) => {
-        console.log(data);
-        resultCountry = data[0].name.common;
-        output.innerHTML = `${resultCountry} 
+    .then((response) => {
+      if (!response.ok) {
+        const error = new Error(response.status);
+        throw error;
+      }
+      else {
+        return response.json();
+      }
+    })
+    .then((data) => {
+      console.log(data);
+      resultCountry = data[0].name.common;
+      output.innerHTML = `${resultCountry} 
                             <img src=${data[0].flags.png} alt="flag of ${resultCountry}" id="flag">`;
-        resultsList.innerHTML = "";   
-        displayDish();
-        movieRecommender(data);    
-      })
-      .catch((error) => {
-        resultsList.innerHTML = "<li>No result found</li>";
-        output.innerText = "";
-        console.log(error)});
+      resultsList.innerHTML = "";
+      displayDish();
+      movieRecommender(data);
+    })
+    .catch((error) => {
+      resultsList.innerHTML = "<li>No result found</li>";
+      output.innerText = "";
+      console.log(error)
+    });
   inputValue.value = "";
 }
 
@@ -209,31 +212,32 @@ randomBtn.addEventListener("click", randomCountry);
 function randomCountry() {
 
   fetch("https://restcountries.com/v3.1/all")
-      .then((response) => {
-        if (!response.ok) {
-          const error = new Error(response.status);
-          throw error;
-        }
-        else {
-          return response.json();
-        }
-      })
-      .then((data) => {
-        let nameResults = data.flatMap(country => country.name.common);
-        let flagResults = data.flatMap(country => country.flags.png);
-        let randomIndex = Math.floor(Math.random() * nameResults.length);
-        
-        resultCountry = nameResults[randomIndex];
-        
-        output.innerHTML = `${resultCountry} 
+    .then((response) => {
+      if (!response.ok) {
+        const error = new Error(response.status);
+        throw error;
+      }
+      else {
+        return response.json();
+      }
+    })
+    .then((data) => {
+      let nameResults = data.flatMap(country => country.name.common);
+      let flagResults = data.flatMap(country => country.flags.png);
+      let randomIndex = Math.floor(Math.random() * nameResults.length);
+
+      resultCountry = nameResults[randomIndex];
+
+      output.innerHTML = `${resultCountry} 
                             <img src=${flagResults[randomIndex]} alt="flag of ${resultCountry}" id="flag">`;
-        displayDish();
-        movieRecommender(data, randomIndex);
-        return resultCountry;
-        
-      })
-      .catch((error) => {
-        console.log(error)});
+      displayDish();
+      movieRecommender(data, randomIndex);
+      return resultCountry;
+
+    })
+    .catch((error) => {
+      console.log(error)
+    });
 }
 
 
@@ -495,4 +499,3 @@ const countryMapping = {
 
 
 
-      
