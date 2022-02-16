@@ -89,7 +89,7 @@ function movieRecommender(data, index=0) {
  
     fetch(`https://api.themoviedb.org/3/discover/movie?api_key=11d60f7fcb15ec34d310ee95b2269f47&with_original_language=${shortCode}&include_adult=false`)
   .then((response) => {
-    if(!response.ok) {throw new Error ('bad choice');}
+    if(!response.ok) {throw new Error ('no films found for this language');}
     return response.json();
   })
   .then((response) => {
