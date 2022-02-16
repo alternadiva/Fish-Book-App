@@ -111,8 +111,17 @@ function movieRecommender(data, index=0) {
     if (resultFilm.backdrop_path){
     moviePoster.src=`https://image.tmdb.org/t/p/w500/${resultFilm.backdrop_path}`;
     }
-
-    movieName.innerText = (`${resultFilm.original_title}`);
+    console.log(resultFilm.original_title);
+    console.log(resultFilm.title);
+    
+    if (resultFilm.original_title !== resultFilm.title){
+      console.log(1);
+      movieName.innerText=(`${resultFilm.title} (${resultFilm.original_title})`);
+    }
+    else{
+      console.log(2);
+      movieName.innerText = (`${resultFilm.original_title}`);
+    }
     voteAverage.innerText = (`Voter rating: ${resultFilm.vote_average}/10`);
     plotSummary.innerText = (`${resultFilm.overview}`); 
     return resultFilm;
