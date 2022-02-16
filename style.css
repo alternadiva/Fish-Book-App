@@ -13,6 +13,11 @@ body {
   background-color: rgb(233, 240, 245);
 }
 
+.center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
 /* ------------ Title and logo -------------- */
 
 h1 {
@@ -108,4 +113,24 @@ h1 {
 
 #flag {
   width: 70px;
+}
+
+/* ---------------------------------- Display Recipe Section -------------------------------- */
+
+#display-dish {
+  max-width: 800px;
+  min-width: 300px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: var(--primary-color);
+  border: 7px solid white;
+  border-radius: 30px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+#dish-img {
+  max-width: fit-content;
 }
