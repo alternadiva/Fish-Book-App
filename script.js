@@ -83,7 +83,6 @@ function movieRecommender(data, index=0) {
   if (language.length > 1){
     language = language[0];
   }
-  console.log(language);
   let languageCode;
   for (const [key, value] of Object.entries(langObject)) {
     if (value.includes(language)){
@@ -91,12 +90,10 @@ function movieRecommender(data, index=0) {
   }
   fetch(`https://api.themoviedb.org/3/discover/movie?api_key=11d60f7fcb15ec34d310ee95b2269f47&with_original_language=${languageCode}&include_adult=false`)
   .then((response) => {
-    console.log(response);
     if(!response.ok) {throw new Error ('problem calling API');}
     return response.json();
   })
   .then((response) => {
-    console.log(response);
     if (response.total_pages == 0) {
       moviePoster.src="";
       movieName.innerText = `No film found for this language`;
@@ -111,15 +108,10 @@ function movieRecommender(data, index=0) {
     if (resultFilm.backdrop_path){
     moviePoster.src=`https://image.tmdb.org/t/p/w500/${resultFilm.backdrop_path}`;
     }
-    console.log(resultFilm.original_title);
-    console.log(resultFilm.title);
-    
     if (resultFilm.original_title !== resultFilm.title){
-      console.log(1);
       movieName.innerText=(`${resultFilm.title} (${resultFilm.original_title})`);
     }
     else{
-      console.log(2);
       movieName.innerText = (`${resultFilm.original_title}`);
     }
     voteAverage.innerText = (`Voter rating: ${resultFilm.vote_average}/10`);
@@ -230,6 +222,7 @@ function randomCountry() {
         }
       })
       .then((data) => {
+        console.log(data);
         let nameResults = data.flatMap(country => country.name.common);
         let flagResults = data.flatMap(country => country.flags.png);
         let randomIndex = Math.floor(Math.random() * nameResults.length);
