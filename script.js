@@ -86,17 +86,21 @@ function movieRecommender(data, index=0) {
   let languageCodeString = languageCode.toString();
   //questionably converts one language code system to another
   let shortCode = `${languageCodeString[0]}${languageCodeString[1]}`;
-    fetch(`https://api.themoviedb.org/3/discover/movie?api_key=11d60f7fcb15ec34d310ee95b2269f47&with_original_language=${shortCode}`)
+ 
+    fetch(`https://api.themoviedb.org/3/discover/movie?api_key=11d60f7fcb15ec34d310ee95b2269f47&with_original_language=${shortCode}&include_adult=false`)
   .then((response) => {
     if(!response.ok) {throw new Error ('bad choice');}
     return response.json();
   })
   .then((response) => {
+    console.log(response);
+    console.log(response.total_pages);
+    let page = Math.floor(Math.random() * response.total_pages);
+    console.log(page); 
+    // let page = Math.floor(Math.random * result.total_pages)
     let filmResults = response.results;
-    let adultFiltered = filmResults.filter(function(result) {
-      return !result.adult});
-    let randomIndex = Math.floor(Math.random() * adultFiltered.length);
-    let resultFilm = adultFiltered[randomIndex];
+    let randomIndex = Math.floor(Math.random() * filmResults.length);
+    let resultFilm = filmResults[randomIndex];
     //display information for user
     if (resultFilm.backdrop_path){
     moviePoster.src=`https://image.tmdb.org/t/p/w500/${resultFilm.backdrop_path}`;
