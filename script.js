@@ -53,7 +53,7 @@ function displayDish() {
         ingredientsList.innerHTML = "";
     
         for (let item of ingredients) { 
-          console.log(item);
+          // console.log(item);
           const li = document.createElement("li");
           li.append(item);
           ingredientsList.append(li);
@@ -75,7 +75,7 @@ function displayDish() {
 
 //function to generate random film in language of chosen country
 
-function movieRecommender(data, index) {
+function movieRecommender(data, index=0) {
   let langResults = data.flatMap(country => country.languages);
   let language = langResults[index];
   let languageCode = Object.keys(language);
@@ -86,12 +86,22 @@ function movieRecommender(data, index) {
   let languageCodeString = languageCode.toString();
   //questionably converts one language code system to another
   let shortCode = `${languageCodeString[0]}${languageCodeString[1]}`;
-    fetch(`https://api.themoviedb.org/3/discover/movie?api_key=11d60f7fcb15ec34d310ee95b2269f47&with_original_language=${shortCode}`)
+  console.log(shortCode);
+    fetch(`https://api.themoviedb.org/3/discover/movie?api_key=11d60f7fcb15ec34d310ee95b2269f47&with_original_language=${shortCode}&include_adult=false`)
   .then((response) => {
-    if(!response.ok) {throw new Error ('bad choice');}
+    console.log(response);
+    if(!response.ok) {throw new Error ('problem calling API');}
     return response.json();
   })
   .then((response) => {
+    console.log(response);
+    if (response.total_pages == 0) {
+      moviePoster.src="";
+      movieName.innerText = `No film found for this language`;
+      voteAverage.innerText = ("");
+      plotSummary.innerText = "";
+      throw new Error ('no films found')
+    };
     let filmResults = response.results;
     let randomIndex = Math.floor(Math.random() * filmResults.length);
     let resultFilm = filmResults[randomIndex];
@@ -106,7 +116,7 @@ function movieRecommender(data, index) {
     return resultFilm;
   })
   .catch((error) => {
-    console.log(error)});
+    console.log(error.message)});
 }
 
 
@@ -183,7 +193,7 @@ function getCountry(event) {
                             <img src=${data[0].flags.png} alt="flag of ${resultCountry}" id="flag">`;
         resultsList.innerHTML = "";   
         displayDish();
-        movieRecommender(data, 0);    
+        movieRecommender(data);    
       })
       .catch((error) => {
         resultsList.innerHTML = "<li>No result found</li>";
