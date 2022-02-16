@@ -49,9 +49,7 @@ function displayDish() {
         const ingredients = recipe.ingredientLines;
         ingredientsElem.innerText = `Want to have the best ${recipe.label}? Here's what you need:`;
 
-        //ingredients appear as a list
-        ingredientsList.innerHTML = "";
-    
+        //ingredients appear as a list    
         for (let item of ingredients) { 
           // console.log(item);
           const li = document.createElement("li");
@@ -60,7 +58,6 @@ function displayDish() {
         }
              
         //create link
-        recipeURLelem.innerHTML = "";
         const a = document.createElement('a');
         a.innerText = "Try out this wonderful recipe!";
         a.href = recipe.url;
@@ -71,6 +68,13 @@ function displayDish() {
   } else { //handle output in case cuisineType is undefined
     dishIntro.innerText = `Sorry, couldn't find a recipe from ${resultCountry}. Try another country!`
   }
+}
+
+//function to hide previous results 
+function clearResults() {
+  dishImgElem.src = "";
+  ingredientsList.innerHTML = "";
+  recipeURLelem.innerHTML = "";
 }
 
 //function to generate random film in language of chosen country
@@ -188,6 +192,7 @@ function getCountry(event) {
       })
       .then((data) => {
         console.log(data);
+        clearResults();
         resultCountry = data[0].name.common;
         output.innerHTML = `${resultCountry} 
                             <img src=${data[0].flags.png} alt="flag of ${resultCountry}" id="flag">`;
@@ -227,6 +232,7 @@ function randomCountry() {
         
         output.innerHTML = `${resultCountry} 
                             <img src=${flagResults[randomIndex]} alt="flag of ${resultCountry}" id="flag">`;
+        clearResults();
         displayDish();
         movieRecommender(data, randomIndex);
         return resultCountry;
