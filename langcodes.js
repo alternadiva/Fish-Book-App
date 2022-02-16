@@ -1,4 +1,4 @@
-langObject = {
+const langObject = {
     aa: 'Afar',
     ab: 'Abkhazian',
     af: 'Afrikaans',
