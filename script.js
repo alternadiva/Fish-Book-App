@@ -200,10 +200,10 @@ function getCountry(event) {
         }
       })
       .then((data) => {
-        console.log(data);
         clearResults();
         resultCountry = data[0].name.common;
-        output.innerHTML = `${resultCountry} 
+        output.style.visibility = "visible";
+        output.innerHTML = `<p id="main-country">${resultCountry} </p>
                             <img src=${data[0].flags.png} alt="flag of ${resultCountry}" id="flag">`;
       resultsList.innerHTML = "";
       recipeSection.classList.remove('hide');
@@ -241,8 +241,8 @@ function randomCountry() {
       let randomIndex = Math.floor(Math.random() * nameResults.length);
 
       resultCountry = nameResults[randomIndex];
-
-      output.innerHTML = `${resultCountry} 
+      output.style.visibility = "visible";
+      output.innerHTML = `<p id="main-country">${resultCountry} </p>
                             <img src=${flagResults[randomIndex]} alt="flag of ${resultCountry}" id="flag">`;
       recipeSection.classList.remove('hide');
       movieSection.classList.remove('hide');

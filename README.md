@@ -1,8 +1,51 @@
-# Fish Book App
+# Home Traveller 
+Travelling can be costly, time-consuming, while tourism has become a big environmental threat. What if we become more conscious travellers by travelling from the comfort of our homes? This is what Home Traveller is all about. Just choose a country and let Home Traveller do all the work for you. 
 
-Fetch API Project
+While we understand the limitations of this approach to travelling, we found this project to be a great way to practice DOM manipulation and using APIs.
+## Project Requirements 
+- [x] See an interesting mash-up of different data
+- [x] Input information to change the displayed result
+- [x] A responsive, mobile-first design
+- [x] Query at least two APIs using fetch
+- [x] Dynamic content generated with JS
+- [x] Ensure your app is accessible to as many users as possible
+  
+[Here's a detailed description of the project.](https://learn.foundersandcoders.com/course/syllabus/pre-apprenticeship/http/project/)
 
-*Work in progress...*
+## APIs used 
 
-![img](https://i.pinimg.com/originals/fc/6c/70/fc6c7053e5b2e9065a29a9933e045181.gif)
+- [REST Countries](https://restcountries.com/)
+- [The Movie DB](https://www.themoviedb.org/documentation/api)
+- [Edamam's Recipe Search API](https://developer.edamam.com/edamam-recipe-api) (allows 10 calls/minute, max 10k calls a month)
+
+## User Journey 
+1. Land on the page
+2. Enter a country or use the “Random Country” button. 
+3. See a dish recommendation if the cuisine of the country belongs to one of the following categories:
+   * American
+   * Asian
+   * British
+   * Caribbean
+   * Central Europe
+   * Chinese
+   * Eastern Europe
+   * French
+   * Indian
+   * Italian
+   * Japanese
+   * Kosher
+   * Mediterranean
+   * Mexican
+   * Middle Eastern
+   * Nordic
+   * South American
+   * South-East Asian
+
+4. See a film recommendation based on the language spoken in that country. 
+5. Try another country!
+---
+[View the application](https://alternadiva.github.io/HTTP-project/)
+
+:sparkles: Developed and designed by [Alex](https://github.com/lascellesabercrombie), [Petra](https://github.com/alternadiva), and [Sonia](https://github.com/sonianb). :sparkles:
+
 
