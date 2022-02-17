@@ -20,8 +20,11 @@
         <div id="search-section">
             <form id="form">
                 <label for="search" id="search-label">Choose the country:</label>
-                <input type="search" name="country" id="country-input" placeholder="Search a country..."
-                    autocomplete="off">
+                <div id="dropdown-search">
+                    <input type="search" name="country" id="country-input" placeholder="Search a country..."
+                        autocomplete="off">
+                    <ul id="results-list"></ul>
+                </div>
                 <input type="submit" value="Submit" id="submit-search">
             </form>
             <div id="or-tag">
@@ -31,7 +34,6 @@
                 <input type="button" value="Generate Randomly" id="random-btn">
             </div>
         </div>
-        <ul id="results-list"></ul>
         <div id="output"></div>
     </section>
 

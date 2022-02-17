@@ -161,7 +161,9 @@ function searchResults() {
               listItem.addEventListener("click", function () {
                 inputValue.value = result;
                 resultsList.innerHTML = "";
+                resultsList.style.background = "";
               })
+              resultsList.style.background = "var(--background-color)";
               resultsList.appendChild(listItem);
             }
           });
