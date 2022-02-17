@@ -224,7 +224,6 @@ function getCountry(event) {
 randomBtn.addEventListener("click", randomCountry);
 
 function randomCountry() {
-
   fetch("https://restcountries.com/v3.1/all")
     .then((response) => {
       if (!response.ok) {
