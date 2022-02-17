@@ -60,7 +60,7 @@ function displayDish() {
 
         //create link
         const a = document.createElement('a');
-        a.innerText = "Try out this wonderful recipe!";
+        a.innerText = "Try out this wonderful recipe! (opens in new tab)";
         a.href = recipe.url;
         a.target = "_blank"
         recipeURLelem.appendChild(a);
@@ -113,6 +113,9 @@ function movieRecommender(data, index = 0) {
     //display information for user
     if (resultFilm.backdrop_path){
     moviePoster.src=`https://image.tmdb.org/t/p/w500/${resultFilm.backdrop_path}`;
+    }
+    else{
+    moviePoster.src="";
     }
     if (resultFilm.original_title !== resultFilm.title){
       movieName.innerText=(`${resultFilm.title} (${resultFilm.original_title})`);
