@@ -3,7 +3,7 @@ Travelling can be costly, time-consuming, while tourism has become a big environ
 
 While we understand the limitations of this approach to travelling, we found this project to be a great way to practice DOM manipulation and using APIs.
 
-🖥️ [View Home Traveller](https://alternadiva.github.io/HTTP-project/)🧳
+🖥️ [View Home Traveller](https://alternadiva.github.io/Home-Traveller-Project/)🧳
 
 ## Project Requirements 
 - [x] See an interesting mash-up of different data
