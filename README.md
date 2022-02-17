@@ -41,7 +41,7 @@ While we understand the limitations of this approach to travelling, we found thi
    * South American
    * South-East Asian
 
-4. See a film recommendation based on the language spoken in that country. 
+4. See a film recommendation based on a language spoken in that country. 
 5. Try another country!
 ---
 [View the application](https://alternadiva.github.io/HTTP-project/)
