@@ -60,7 +60,7 @@ function displayDish() {
 
         //create link
         const a = document.createElement('a');
-        a.innerText = "Try out this wonderful recipe!";
+        a.innerText = "Try out this wonderful recipe! (opens in new tab)";
         a.href = recipe.url;
         a.target = "_blank"
         recipeURLelem.appendChild(a);
