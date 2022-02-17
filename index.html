@@ -19,29 +19,35 @@
     <section id="get-country">
         <div id="search-section">
             <form id="form">
-                <label for="search">Choose the country:</label>
+                <label for="search" id="search-label">Choose the country:</label>
                 <input type="search" name="country" id="country-input" placeholder="Search a country..."
                     autocomplete="off">
                 <input type="submit" value="Submit" id="submit-search">
             </form>
-            <p>OR</p>
+            <div id="or-tag">
+                <p id="">OR</p>
+            </div>
             <div id="generate-section">
                 <input type="button" value="Generate Randomly" id="random-btn">
             </div>
         </div>
         <ul id="results-list"></ul>
-        <p id="output"></p>
+        <div id="output"></div>
     </section>
 
     <section class="center hide" id="display-dish">
-        <h2 id="dish-intro"></h2>
-        <img class="center" id="dish-img">
+        <img src="./assets/recipe.png" alt="whisk icon" class="section-icon">
+        <h2 id="section-title">Recipe</h2>
+        <h3 id="dish-intro"></h3>
+        <img class="center" id="dish-img" alt="">
         <p id="dish-type"></p>
         <p id="ingredients"></p>
         <ul id="ingredients-list"></ul>
         <p id="recipe-url"></p>
     </section>
     <section class="center hide" id="movie-rec">
+        <img src="./assets/movie.png" alt="clipperboard icon" class="section-icon">
+        <h2 id="section-title">Movie</h2>
         <img class="center" id="movie-poster" alt="">
         <h2 id="movie-title"></h2>
         <h3 id="vote-average"></h3>
