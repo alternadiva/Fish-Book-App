@@ -131,9 +131,26 @@ h1 {
   width: 300px;
 }
 
+#dropdown-search {
+  position: relative;
+}
+
 #country-list-item {
   cursor: pointer;
   list-style: none;
+  border-bottom: 0.5px solid rgb(209, 209, 209);
+}
+
+#results-list {
+  text-align: left;
+  padding: 5px 0 0 20px;
+  border-radius: 10px;
+  width: 280px;
+  height: 200px;
+  overflow: scroll;
+  position: absolute;
+  top: 35px;
+  line-height: 35px;
 }
 
 /* -------------- Display Search Results ------------------ */
@@ -229,7 +246,7 @@ h1 {
 }
 
 #plot-summary {
-  margin: 5px 20px;
+  margin: 5px 20px 50px 20px;
   text-align: justify;
   line-height: 25px;
 }
