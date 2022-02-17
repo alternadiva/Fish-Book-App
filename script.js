@@ -474,7 +474,7 @@ const countryMapping = {
   "Brunei": undefined,
   "Seychelles": undefined,
   "Saint Helena, Ascension and Tristan da Cunha": undefined,
-  "Israel": "Kosher",
+  "Israel": "Middle Eastern",
   "Peru": "South American",
   "Romania": "Eastern Europe",
   "Svalbard and Jan Mayen": undefined,
