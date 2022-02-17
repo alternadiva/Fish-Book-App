@@ -158,6 +158,7 @@ function searchResults() {
         timeout = setTimeout(() => {
           nameResults.forEach(result => {
             if (result.toLowerCase().includes(inputValue.value.toLowerCase())) {
+              resultsList.style.display = "block";
               let listItem = document.createElement("li");
               listItem.id = "country-list-item";
               listItem.innerText = result;
@@ -165,6 +166,7 @@ function searchResults() {
                 inputValue.value = result;
                 resultsList.innerHTML = "";
                 resultsList.style.background = "";
+                resultsList.style.display = "none";
               })
               resultsList.style.background = "var(--background-color)";
               resultsList.appendChild(listItem);
@@ -212,6 +214,10 @@ function getCountry(event) {
       movieSection.classList.remove('hide');
       displayDish();
       movieRecommender(data);
+      window.scroll({
+        top: 750,
+        behavior: 'smooth'
+      });
     })
     .catch((error) => {
       resultsList.innerHTML = "<li>No result found</li>";
@@ -251,6 +257,10 @@ function randomCountry() {
       clearResults();
       displayDish();
       movieRecommender(data, randomIndex);
+      window.scroll({
+        top: 750,
+        behavior: 'smooth'
+      });
       return resultCountry;
 
     })
@@ -515,6 +525,3 @@ const countryMapping = {
   "Switzerland": "Central Europe",
   "Christmas Island": undefined
 };
-
-
-
