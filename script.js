@@ -114,6 +114,9 @@ function movieRecommender(data, index = 0) {
     if (resultFilm.backdrop_path){
     moviePoster.src=`https://image.tmdb.org/t/p/w500/${resultFilm.backdrop_path}`;
     }
+    else{
+    moviePoster.src="";
+    }
     if (resultFilm.original_title !== resultFilm.title){
       movieName.innerText=(`${resultFilm.title} (${resultFilm.original_title})`);
     }
