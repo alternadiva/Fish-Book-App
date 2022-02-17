@@ -16,7 +16,9 @@ const dishIntro = document.getElementById('dish-intro');
 const dishImgElem = document.getElementById('dish-img');
 const ingredientsElem = document.getElementById('ingredients');
 const recipeURLelem = document.getElementById('recipe-url');
-const ingredientsList = document.getElementById('ingredients-list')
+const ingredientsList = document.getElementById('ingredients-list');
+const recipeSection = document.getElementById('display-dish');
+const movieSection = document.getElementById('movie-rec');
 
 // ****************************
 // * Display Dish Information *
@@ -24,7 +26,6 @@ const ingredientsList = document.getElementById('ingredients-list')
 
 function displayDish() {
   const cuisineType = countryMapping[resultCountry] //access the mapped value of the countrieMapping object 
-  console.log(cuisineType);
 
   if (cuisineType) {
     fetch(`https://api.edamam.com/api/recipes/v2/?type=public&q=&cuisineType=${cuisineType}&app_id=${edamamAppID}&app_key=${edamamAppKey}`)
@@ -56,7 +57,7 @@ function displayDish() {
           li.append(item);
           ingredientsList.append(li);
         }
-             
+
         //create link
         const a = document.createElement('a');
         a.innerText = "Try out this wonderful recipe!";
@@ -75,11 +76,12 @@ function clearResults() {
   dishImgElem.src = "";
   ingredientsList.innerHTML = "";
   recipeURLelem.innerHTML = "";
+  ingredientsElem.innerHTML = "";
 }
 
 //function to generate random film in language of chosen country
 
-function movieRecommender(data, index=0) {
+function movieRecommender(data, index = 0) {
   let langResults = data.flatMap(country => country.languages);
   let languageThing = langResults[index];
   let language= Object.values(languageThing);
@@ -141,7 +143,7 @@ function searchResults() {
       .then((response) => response.json())
       .then((data) => {
         resultsList.innerHTML = "";
-        
+
         clearTimeout(timeout);
 
         if (inputValue.value.trim().length === 0) {
@@ -149,16 +151,17 @@ function searchResults() {
         }
 
         let nameResults = data.flatMap(country => country.name.common);
-        
+
         timeout = setTimeout(() => {
           nameResults.forEach(result => {
             if (result.toLowerCase().includes(inputValue.value.toLowerCase())) {
               let listItem = document.createElement("li");
               listItem.id = "country-list-item";
               listItem.innerText = result;
-              listItem.addEventListener("click", function() {
+              listItem.addEventListener("click", function () {
                 inputValue.value = result;
-                resultsList.innerHTML = "";})
+                resultsList.innerHTML = "";
+              })
               resultsList.appendChild(listItem);
             }
           });
@@ -168,7 +171,7 @@ function searchResults() {
         resultsList.innerHTML = "<li>No result found</li>";
       });
   }
-  }
+}
 
 
 // Submit input and show final result
@@ -199,14 +202,17 @@ function getCountry(event) {
         resultCountry = data[0].name.common;
         output.innerHTML = `${resultCountry} 
                             <img src=${data[0].flags.png} alt="flag of ${resultCountry}" id="flag">`;
-        resultsList.innerHTML = "";   
-        displayDish();
-        movieRecommender(data);    
-      })
-      .catch((error) => {
-        resultsList.innerHTML = "<li>No result found</li>";
-        output.innerText = "";
-        console.log(error)});
+      resultsList.innerHTML = "";
+      recipeSection.classList.remove('hide');
+      movieSection.classList.remove('hide');
+      displayDish();
+      movieRecommender(data);
+    })
+    .catch((error) => {
+      resultsList.innerHTML = "<li>No result found</li>";
+      output.innerText = "";
+      console.log(error)
+    });
   inputValue.value = "";
 }
 
@@ -217,33 +223,35 @@ randomBtn.addEventListener("click", randomCountry);
 function randomCountry() {
 
   fetch("https://restcountries.com/v3.1/all")
-      .then((response) => {
-        if (!response.ok) {
-          const error = new Error(response.status);
-          throw error;
-        }
-        else {
-          return response.json();
-        }
-      })
-      .then((data) => {
-        console.log(data);
-        let nameResults = data.flatMap(country => country.name.common);
-        let flagResults = data.flatMap(country => country.flags.png);
-        let randomIndex = Math.floor(Math.random() * nameResults.length);
-        
-        resultCountry = nameResults[randomIndex];
-        
-        output.innerHTML = `${resultCountry} 
+    .then((response) => {
+      if (!response.ok) {
+        const error = new Error(response.status);
+        throw error;
+      }
+      else {
+        return response.json();
+      }
+    })
+    .then((data) => {
+      let nameResults = data.flatMap(country => country.name.common);
+      let flagResults = data.flatMap(country => country.flags.png);
+      let randomIndex = Math.floor(Math.random() * nameResults.length);
+
+      resultCountry = nameResults[randomIndex];
+
+      output.innerHTML = `${resultCountry} 
                             <img src=${flagResults[randomIndex]} alt="flag of ${resultCountry}" id="flag">`;
-        clearResults();
-        displayDish();
-        movieRecommender(data, randomIndex);
-        return resultCountry;
-        
-      })
-      .catch((error) => {
-        console.log(error)});
+      recipeSection.classList.remove('hide');
+      movieSection.classList.remove('hide');
+      clearResults();
+      displayDish();
+      movieRecommender(data, randomIndex);
+      return resultCountry;
+
+    })
+    .catch((error) => {
+      console.log(error)
+    });
 }
 
 
@@ -505,4 +513,3 @@ const countryMapping = {
 
 
 
-      
